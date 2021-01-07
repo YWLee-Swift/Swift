@@ -85,7 +85,18 @@ struct PopularDestinationsView: View {
     }
 }
 
+struct Restaurant: Hashable {
+    let name, imageName: String
+}
+
+
 struct PopularRestaurantsView: View {
+    
+    let restaurants: [Restaurant] = [
+        .init(name: "Japan's Finest Tapas", imageName: "tapas"),
+        .init(name: "Bar & Grill", imageName: "bar_grill"),
+    ]
+    
     var body: some View {
         VStack {
             HStack {
@@ -97,10 +108,43 @@ struct PopularRestaurantsView: View {
             
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
-                    ForEach(0..<10, id: \.self) { num in
-                        Spacer()
-                            .frame(width: 200, height: 64)
-                            .background(Color.gray)
+                    ForEach(restaurants, id: \.self) { restaurant in
+                        HStack(spacing: 8) {
+                            Image(restaurant.imageName)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                                .clipped()
+                                .cornerRadius(5)
+                                .padding(.leading, 6)
+                                .padding(.vertical, 6)
+                            
+                            VStack(alignment: .leading, spacing: 6) {
+                                
+                                HStack {
+                                    Text(restaurant.name)
+                                    Spacer()
+                                    Button(action: {}, label: {
+                                        Image(systemName: "ellipsis")
+                                            .foregroundColor(.gray)
+                                    })
+                                }
+                                
+                                HStack {
+                                    Image(systemName: "star.fill")
+                                    Text("4.7 • Sushi • $$")
+                                }
+                                
+                                Text("Tokyo, Japan")
+                                
+                                
+                            }.font(.system(size: 12, weight: .semibold))
+                            
+                            
+                            Spacer()
+                        }
+                            .frame(width: 240)
+                            .background(Color(.init(white: 0.9, alpha: 1)))
                             .cornerRadius(5.0)
                             .shadow(color: .gray, radius: 4, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 2)
                             .padding(.bottom)
@@ -112,7 +156,18 @@ struct PopularRestaurantsView: View {
     }
 }
 
+struct User: Hashable {
+    let name, imageName: String
+}
+
 struct TrendingCreatorsView: View {
+    
+    let users: [User] = [
+        .init(name: "Amy Adams", imageName: "amy"),
+        .init(name: "Billy", imageName: "billy"),
+        .init(name: "Sam Smith", imageName: "sam"),
+    ]
+    
     var body: some View {
         VStack {
             HStack {
@@ -123,14 +178,22 @@ struct TrendingCreatorsView: View {
             .padding(.top)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(0..<5, id: \.self) { num in
+                HStack(alignment: .top, spacing: 12) {
+                    ForEach(users, id: \.self) { user in
                         
-                        Spacer()
-                            .frame(width: 50, height: 50)
-                            .background(Color.gray)
-                            .cornerRadius(.infinity)
-                            .shadow(color: .gray, radius: 4, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: 2)
+                        VStack {
+                            Image(user.imageName)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 60)
+                                .cornerRadius(60)
+                            Text(user.name)
+                                .font(.system(size: 11, weight: .semibold))
+                                .multilineTextAlignment(.center)
+                            
+                        }
+                            .frame(width: 60)
+                            .shadow(color: .gray, radius: 4, x: 0.0, y: 2)
                             .padding(.bottom)
                     }
                     
